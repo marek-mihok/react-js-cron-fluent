@@ -26,8 +26,5 @@ package-lock.json
 !/src/
 
 ## dot-files
-!/.babelrc
-!/.eslintrc
 !/.npmignore
-!/.prettierrc.js
-!/.yarnrc.yml
+!/.npmrc
