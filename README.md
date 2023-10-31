@@ -2,13 +2,7 @@
 
 > A React cron editor built with [fluentui](https://github.com/microsoft/fluentui)
 
-[![npm package](https://img.shields.io/npm/v/react-js-cron/latest.svg)](https://www.npmjs.com/package/react-js-cron)
-[![MIT License Badge](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/xrutayisire/react-js-cron/blob/master/LICENSE.md)
-
-[![Build](https://github.com/xrutayisire/react-js-cron/actions/workflows/build.yml/badge.svg)](https://github.com/xrutayisire/react-js-cron/actions/workflows/build.yml)
-[![Lint](https://github.com/xrutayisire/react-js-cron/actions/workflows/lint.yml/badge.svg)](https://github.com/xrutayisire/react-js-cron/actions/workflows/lint.yml)
-[![Unit tests](https://github.com/xrutayisire/react-js-cron/actions/workflows/test.yml/badge.svg)](https://github.com/xrutayisire/react-js-cron/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/xrutayisire/react-js-cron/branch/master/graph/badge.svg?token=H4I8REN489)](https://codecov.io/gh/xrutayisire/react-js-cron)
+[![MIT License Badge](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/rapid-platform/react-js-cron-fluent/blob/main/LICENSE.md)
 
 Live **demo** and **usage** at [https://xrutayisire.github.io/react-js-cron/](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--demo)
 
@@ -40,7 +34,7 @@ react-js-cron is written in TypeScript with complete definitions
 Be sure that you have these dependencies on your project:
 
 - react (>=17.0.0)
-- antd (>=5.8.0)
+- @fluentui/react (^8.111.2)
 
 ```bash
 # NPM
@@ -53,8 +47,7 @@ yarn add react-js-cron
 ## Usage
 
 ```jsx
-import { Cron } from 'react-js-cron'
-import 'react-js-cron/dist/styles.css'
+import { Cron } from '@rapid-platform/react-js-cron-fluent'
 
 export function App() {
   const [value, setValue] = useState('30 5 * * 1,6')
@@ -63,18 +56,12 @@ export function App() {
 }
 ```
 
-Don't forget to import styles manually:
-
-```jsx
-import 'react-js-cron/dist/styles.css'
-```
-
 ## Converter
 
 If you want to use the converter used internally you can import it in your project:
 
 ```jsx
-import { converter } from 'react-js-cron'
+import { converter } from '@rapid-platform/react-js-cron-fluent'
 
 const cronString = converter.getCronStringFromValues(
   'day', // period: 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'reboot'
