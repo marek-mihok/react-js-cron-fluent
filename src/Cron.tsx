@@ -1,4 +1,5 @@
-import { Button } from 'antd'
+import { DefaultButton } from '@fluentui/react'
+import useComposedClassName from '@rapid-platform/use-composed-class-name'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { getCronStringFromValues, setValuesFromCronString } from './converter'
@@ -10,7 +11,7 @@ import Period from './fields/Period'
 import WeekDays from './fields/WeekDays'
 import { DEFAULT_LOCALE_EN } from './locale'
 import { CronProps, PeriodType } from './types'
-import { classNames, setError, usePrevious } from './utils'
+import { setError, usePrevious } from './utils'
 
 export default function Cron(props: CronProps) {
   const {
@@ -144,7 +145,10 @@ export default function Cron(props: CronProps) {
           dropdownsConfig
         )
 
-        setValue(cron, { selectedPeriod })
+        if (value !== cron) {
+          setValue(cron, { selectedPeriod })
+        }
+
         internalValueRef.current = cron
 
         onError && onError(undefined)
@@ -218,30 +222,56 @@ export default function Cron(props: CronProps) {
     [period, setValue, onError, clearButtonAction]
   )
 
-  const internalClassName = useMemo(
-    () =>
-      classNames({
-        'react-js-cron': true,
-        'react-js-cron-error': error && displayError,
-        'react-js-cron-disabled': disabled,
-        'react-js-cron-read-only': readOnly,
-        [`${className}`]: !!className,
-        [`${className}-error`]: error && displayError && !!className,
-        [`${className}-disabled`]: disabled && !!className,
-        [`${className}-read-only`]: readOnly && !!className,
-      }),
+  const internalClassName = useComposedClassName(
+    function* () {
+      yield 'react-js-cron'
+
+      if (error && displayError) {
+        yield 'react-js-cron-error'
+      }
+
+      if (disabled) {
+        yield 'react-js-cron-disabled'
+      }
+
+      if (readOnly) {
+        yield 'react-js-cron-read-only'
+      }
+
+      if (className) {
+        yield className
+      }
+
+      if (className && error && displayError) {
+        yield `${className}-error`
+      }
+
+      if (className && disabled) {
+        yield `${className}-disabled`
+      }
+
+      if (className && readOnly) {
+        yield `${className}-read-only`
+      }
+    },
     [className, error, displayError, disabled, readOnly]
   )
 
   const { className: clearButtonClassNameProp, ...otherClearButtonProps } =
     clearButtonProps
-  const clearButtonClassName = useMemo(
-    () =>
-      classNames({
-        'react-js-cron-clear-button': true,
-        [`${className}-clear-button`]: !!className,
-        [`${clearButtonClassNameProp}`]: !!clearButtonClassNameProp,
-      }),
+
+  const clearButtonClassName = useComposedClassName(
+    function* () {
+      yield 'react-js-cron-clear-button'
+
+      if (className) {
+        yield `${className}-clear-button`
+      }
+
+      if (clearButtonClassNameProp) {
+        yield clearButtonClassNameProp
+      }
+    },
     [className, clearButtonClassNameProp]
   )
 
@@ -250,16 +280,15 @@ export default function Cron(props: CronProps) {
     () => {
       if (clearButton && !readOnly) {
         return (
-          <Button
+          <DefaultButton
             className={clearButtonClassName}
-            danger
             type='primary'
             disabled={disabled}
             {...otherClearButtonProps}
             onClick={handleClear}
           >
             {locale.clearButtonText || DEFAULT_LOCALE_EN.clearButtonText}
-          </Button>
+          </DefaultButton>
         )
       }
 
@@ -377,7 +406,7 @@ export default function Cron(props: CronProps) {
               />
             )}
 
-          <div>
+          <div className='time'>
             {periodForRender !== 'minute' &&
               periodForRender !== 'hour' &&
               allowedDropdowns.includes('hours') && (
@@ -428,9 +457,8 @@ export default function Cron(props: CronProps) {
                   filterOption={dropdownsConfig?.minutes?.filterOption}
                 />
               )}
-
-            {clearButtonNode}
           </div>
+          {clearButtonNode}
         </>
       )}
     </div>

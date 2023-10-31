@@ -1,6 +1,6 @@
 ## ReactJS Cron
 
-> A React cron editor built with [antd](https://github.com/ant-design/ant-design)
+> A React cron editor built with [fluentui](https://github.com/microsoft/fluentui)
 
 [![npm package](https://img.shields.io/npm/v/react-js-cron/latest.svg)](https://www.npmjs.com/package/react-js-cron)
 [![MIT License Badge](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/xrutayisire/react-js-cron/blob/master/LICENSE.md)

@@ -1,10 +1,9 @@
-import React, { useMemo } from 'react'
+import useComposedClassName from '@rapid-platform/use-composed-class-name'
 
 import CustomSelect from '../components/CustomSelect'
 import { UNITS } from '../constants'
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { MinutesProps } from '../types'
-import { classNames } from '../utils'
 
 export default function Minutes(props: MinutesProps) {
   const {
@@ -17,19 +16,19 @@ export default function Minutes(props: MinutesProps) {
     leadingZero,
     clockFormat,
     period,
-    periodicityOnDoubleClick,
     mode,
-    allowClear,
-    filterOption,
   } = props
-  const internalClassName = useMemo(
-    () =>
-      classNames({
-        'react-js-cron-field': true,
-        'react-js-cron-minutes': true,
-        [`${className}-field`]: !!className,
-        [`${className}-minutes`]: !!className,
-      }),
+
+  const internalClassName = useComposedClassName(
+    function* () {
+      yield 'react-js-cron-field'
+      yield 'react-js-cron-minutes'
+
+      if (className) {
+        yield `${className}-field`
+        yield `${className}-minutes`
+      }
+    },
     [className]
   )
 
@@ -65,10 +64,7 @@ export default function Minutes(props: MinutesProps) {
         leadingZero={leadingZero}
         clockFormat={clockFormat}
         period={period}
-        periodicityOnDoubleClick={periodicityOnDoubleClick}
         mode={mode}
-        allowClear={allowClear}
-        filterOption={filterOption}
       />
 
       {period === 'hour' && locale.suffixMinutesForHourPeriod !== '' && (

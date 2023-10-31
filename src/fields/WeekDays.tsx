@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react'
+import useComposedClassName from '@rapid-platform/use-composed-class-name'
+import { useMemo } from 'react'
 
 import CustomSelect from '../components/CustomSelect'
 import { UNITS } from '../constants'
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { WeekDaysProps } from '../types'
-import { classNames } from '../utils'
 
 export default function WeekDays(props: WeekDaysProps) {
   const {
@@ -17,23 +17,25 @@ export default function WeekDays(props: WeekDaysProps) {
     disabled,
     readOnly,
     period,
-    periodicityOnDoubleClick,
     mode,
-    allowClear,
-    filterOption,
   } = props
   const optionsList = locale.weekDays || DEFAULT_LOCALE_EN.weekDays
   const noMonthDays = period === 'week' || !monthDays || monthDays.length === 0
 
-  const internalClassName = useMemo(
-    () =>
-      classNames({
-        'react-js-cron-field': true,
-        'react-js-cron-week-days': true,
-        'react-js-cron-week-days-placeholder': !noMonthDays,
-        [`${className}-field`]: !!className,
-        [`${className}-week-days`]: !!className,
-      }),
+  const internalClassName = useComposedClassName(
+    function* () {
+      yield 'react-js-cron-field'
+      yield 'react-js-cron-week-days'
+
+      if (className) {
+        yield `${className}-field`
+        yield `${className}-week-days`
+      }
+
+      if (noMonthDays) {
+        yield 'react-js-cron-week-days-placeholder'
+      }
+    },
     [className, noMonthDays]
   )
 
@@ -86,8 +88,6 @@ export default function WeekDays(props: WeekDaysProps) {
         value={value}
         unit={{
           ...UNITS[4],
-          // Allow translation of alternative labels when using "humanizeLabels"
-          // Issue #3
           alt: locale.altWeekDays || DEFAULT_LOCALE_EN.altWeekDays,
         }}
         setValue={setValue}
@@ -97,10 +97,7 @@ export default function WeekDays(props: WeekDaysProps) {
         disabled={disabled}
         readOnly={readOnly}
         period={period}
-        periodicityOnDoubleClick={periodicityOnDoubleClick}
         mode={mode}
-        allowClear={allowClear}
-        filterOption={filterOption}
       />
     </div>
   ) : null

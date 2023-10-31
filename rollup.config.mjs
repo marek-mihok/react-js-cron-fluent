@@ -14,11 +14,13 @@ export default [
         file: 'dist/cjs/index.js',
         format: 'cjs',
         assetFileNames: '[name][extname]',
+        sourcemap: true,
       },
       {
         file: 'dist/esm/index.js',
         format: 'esm',
         assetFileNames: '[name][extname]',
+        sourcemap: true,
       },
     ],
     plugins: [

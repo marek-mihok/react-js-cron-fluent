@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react'
+import useComposedClassName from '@rapid-platform/use-composed-class-name'
+import { useMemo } from 'react'
 
 import CustomSelect from '../components/CustomSelect'
 import { UNITS } from '../constants'
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { MonthDaysProps } from '../types'
-import { classNames } from '../utils'
 
 export default function MonthDays(props: MonthDaysProps) {
   const {
@@ -17,37 +17,35 @@ export default function MonthDays(props: MonthDaysProps) {
     readOnly,
     leadingZero,
     period,
-    periodicityOnDoubleClick,
     mode,
-    allowClear,
-    filterOption,
   } = props
   const noWeekDays = !weekDays || weekDays.length === 0
 
-  const internalClassName = useMemo(
-    () =>
-      classNames({
-        'react-js-cron-field': true,
-        'react-js-cron-month-days': true,
-        'react-js-cron-month-days-placeholder': !noWeekDays,
-        [`${className}-field`]: !!className,
-        [`${className}-month-days`]: !!className,
-      }),
-    [className, noWeekDays]
+  const internalClassName = useComposedClassName(
+    function* () {
+      yield 'react-js-cron-field'
+      yield 'react-js-cron-month-days'
+
+      if (className) {
+        yield `${className}-field`
+        yield `${className}-month-days`
+      }
+
+      if (!noWeekDays) {
+        yield 'react-js-cron-month-days-placeholder'
+      }
+    },
+    [className]
   )
 
   const localeJSON = JSON.stringify(locale)
-  const placeholder = useMemo(
-    () => {
-      if (noWeekDays) {
-        return locale.emptyMonthDays || DEFAULT_LOCALE_EN.emptyMonthDays
-      }
+  const placeholder = useMemo(() => {
+    if (noWeekDays) {
+      return locale.emptyMonthDays || DEFAULT_LOCALE_EN.emptyMonthDays
+    }
 
-      return locale.emptyMonthDaysShort || DEFAULT_LOCALE_EN.emptyMonthDaysShort
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [noWeekDays, localeJSON]
-  )
+    return locale.emptyMonthDaysShort || DEFAULT_LOCALE_EN.emptyMonthDaysShort
+  }, [noWeekDays, localeJSON])
 
   const displayMonthDays =
     !readOnly ||
@@ -73,10 +71,7 @@ export default function MonthDays(props: MonthDaysProps) {
         readOnly={readOnly}
         leadingZero={leadingZero}
         period={period}
-        periodicityOnDoubleClick={periodicityOnDoubleClick}
         mode={mode}
-        allowClear={allowClear}
-        filterOption={filterOption}
       />
     </div>
   ) : null

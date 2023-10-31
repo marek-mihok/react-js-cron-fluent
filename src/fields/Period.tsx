@@ -1,10 +1,9 @@
-import { Select } from 'antd'
-import { BaseOptionType } from 'antd/es/select'
-import React, { useCallback, useMemo } from 'react'
+import { ComboBox, IComboBox, IComboBoxOption } from '@fluentui/react'
+import useComposedClassName from '@rapid-platform/use-composed-class-name'
+import React, { useCallback } from 'react'
 
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { PeriodProps, PeriodType } from '../types'
-import { classNames } from '../utils'
 
 export default function Period(props: PeriodProps) {
   const {
@@ -18,47 +17,47 @@ export default function Period(props: PeriodProps) {
     allowedPeriods,
     allowClear,
   } = props
-  const options: BaseOptionType[] = []
+  const options: IComboBoxOption[] = []
 
   if (allowedPeriods.includes('year')) {
     options.push({
-      value: 'year',
-      label: locale.yearOption || DEFAULT_LOCALE_EN.yearOption,
+      key: 'year',
+      text: locale.yearOption || DEFAULT_LOCALE_EN.yearOption,
     })
   }
 
   if (allowedPeriods.includes('month')) {
     options.push({
-      value: 'month',
-      label: locale.monthOption || DEFAULT_LOCALE_EN.monthOption,
+      key: 'month',
+      text: locale.monthOption || DEFAULT_LOCALE_EN.monthOption,
     })
   }
 
   if (allowedPeriods.includes('week')) {
     options.push({
-      value: 'week',
-      label: locale.weekOption || DEFAULT_LOCALE_EN.weekOption,
+      key: 'week',
+      text: locale.weekOption || DEFAULT_LOCALE_EN.weekOption,
     })
   }
 
   if (allowedPeriods.includes('day')) {
     options.push({
-      value: 'day',
-      label: locale.dayOption || DEFAULT_LOCALE_EN.dayOption,
+      key: 'day',
+      text: locale.dayOption || DEFAULT_LOCALE_EN.dayOption,
     })
   }
 
   if (allowedPeriods.includes('hour')) {
     options.push({
-      value: 'hour',
-      label: locale.hourOption || DEFAULT_LOCALE_EN.hourOption,
+      key: 'hour',
+      text: locale.hourOption || DEFAULT_LOCALE_EN.hourOption,
     })
   }
 
   if (allowedPeriods.includes('minute')) {
     options.push({
-      value: 'minute',
-      label: locale.minuteOption || DEFAULT_LOCALE_EN.minuteOption,
+      key: 'minute',
+      text: locale.minuteOption || DEFAULT_LOCALE_EN.minuteOption,
     })
   }
 
@@ -68,49 +67,33 @@ export default function Period(props: PeriodProps) {
     (shortcuts === true || shortcuts.includes('@reboot'))
   ) {
     options.push({
-      value: 'reboot',
-      label: locale.rebootOption || DEFAULT_LOCALE_EN.rebootOption,
+      key: 'reboot',
+      text: locale.rebootOption || DEFAULT_LOCALE_EN.rebootOption,
     })
   }
 
   const handleChange = useCallback(
-    (newValue: PeriodType) => {
-      if (!readOnly) {
-        setValue(newValue)
+    (
+      event: React.FormEvent<IComboBox>,
+      option?: IComboBoxOption | undefined
+    ) => {
+      if (!readOnly && option?.key) {
+        setValue(option.key as PeriodType)
       }
     },
     [setValue, readOnly]
   )
 
-  const internalClassName = useMemo(
-    () =>
-      classNames({
-        'react-js-cron-field': true,
-        'react-js-cron-period': true,
-        [`${className}-field`]: !!className,
-        [`${className}-period`]: !!className,
-      }),
-    [className]
-  )
+  const internalClassName = useComposedClassName(
+    function* () {
+      yield 'react-js-cron-field'
+      yield 'react-js-cron-period'
 
-  const selectClassName = useMemo(
-    () =>
-      classNames({
-        'react-js-cron-select': true,
-        'react-js-cron-select-no-prefix': locale.prefixPeriod === '',
-        [`${className}-select`]: !!className,
-      }),
-    [className, locale.prefixPeriod]
-  )
-
-  const popupClassName = useMemo(
-    () =>
-      classNames({
-        'react-js-cron-select-dropdown': true,
-        'react-js-cron-select-dropdown-period': true,
-        [`${className}-select-dropdown`]: !!className,
-        [`${className}-select-dropdown-period`]: !!className,
-      }),
+      if (className) {
+        yield `${className}-field`
+        yield `${className}-period`
+      }
+    },
     [className]
   )
 
@@ -120,19 +103,13 @@ export default function Period(props: PeriodProps) {
         <span>{locale.prefixPeriod || DEFAULT_LOCALE_EN.prefixPeriod}</span>
       )}
 
-      <Select<PeriodType, BaseOptionType>
+      <ComboBox
         key={JSON.stringify(locale)}
-        defaultValue={value}
-        value={value}
-        onChange={handleChange}
         options={options}
-        className={selectClassName}
-        popupClassName={popupClassName}
+        selectedKey={value}
         disabled={disabled}
-        suffixIcon={readOnly ? null : undefined}
-        open={readOnly ? false : undefined}
         data-testid='select-period'
-        allowClear={allowClear}
+        onChange={handleChange}
       />
     </div>
   )

@@ -1,10 +1,9 @@
-import React, { useMemo } from 'react'
+import useComposedClassName from '@rapid-platform/use-composed-class-name'
 
 import CustomSelect from '../components/CustomSelect'
 import { UNITS } from '../constants'
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { HoursProps } from '../types'
-import { classNames } from '../utils'
 
 export default function Hours(props: HoursProps) {
   const {
@@ -17,19 +16,19 @@ export default function Hours(props: HoursProps) {
     leadingZero,
     clockFormat,
     period,
-    periodicityOnDoubleClick,
     mode,
-    allowClear,
-    filterOption,
   } = props
-  const internalClassName = useMemo(
-    () =>
-      classNames({
-        'react-js-cron-field': true,
-        'react-js-cron-hours': true,
-        [`${className}-field`]: !!className,
-        [`${className}-hours`]: !!className,
-      }),
+
+  const internalClassName = useComposedClassName(
+    function* () {
+      yield 'react-js-cron-field'
+      yield 'react-js-cron-hours'
+
+      if (className) {
+        yield `${className}-field`
+        yield `${className}-hours`
+      }
+    },
     [className]
   )
 
@@ -51,10 +50,7 @@ export default function Hours(props: HoursProps) {
         leadingZero={leadingZero}
         clockFormat={clockFormat}
         period={period}
-        periodicityOnDoubleClick={periodicityOnDoubleClick}
         mode={mode}
-        allowClear={allowClear}
-        filterOption={filterOption}
       />
     </div>
   )

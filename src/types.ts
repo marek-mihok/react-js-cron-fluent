@@ -1,4 +1,4 @@
-import { ButtonProps, SelectProps } from 'antd'
+import { IBaseButtonProps, IComboBoxProps } from '@fluentui/react'
 import { Dispatch, SetStateAction } from 'react'
 
 // External props
@@ -277,7 +277,7 @@ export type OnError =
   | OnErrorFunction
   | Dispatch<SetStateAction<CronError>>
   | undefined
-export interface ClearButtonProps extends Omit<ButtonProps, 'onClick'> {}
+export interface ClearButtonProps extends Omit<IBaseButtonProps, 'onClick'> {}
 export type ClearButtonAction = 'empty' | 'fill-with-every'
 export type PeriodType =
   | 'year'
@@ -380,22 +380,8 @@ export interface MinutesProps extends FieldProps {
 }
 export interface CustomSelectProps
   extends Omit<
-    SelectProps<any>,
-    | 'mode'
-    | 'tokenSeparators'
-    | 'virtual'
-    | 'onClick'
-    | 'onBlur'
-    | 'tagRender'
-    | 'dropdownRender'
-    | 'showSearch'
-    | 'suffixIcon'
-    | 'onChange'
-    | 'dropdownMatchSelectWidth'
-    | 'options'
-    | 'onSelect'
-    | 'onDeselect'
-    | 'filterOption'
+    IComboBoxProps,
+      'options'
   > {
   grid?: boolean
   setValue: SetValueNumbersOrUndefined
@@ -409,9 +395,9 @@ export interface CustomSelectProps
   clockFormat?: ClockFormat
   period: PeriodType
   unit: Unit
-  periodicityOnDoubleClick: boolean
+  // periodicityOnDoubleClick: boolean
   mode: Mode
-  filterOption?: FilterOption
+  // filterOption?: FilterOption
 }
 export type SetValueNumbersOrUndefined = Dispatch<
   SetStateAction<number[] | undefined>

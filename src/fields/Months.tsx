@@ -1,10 +1,9 @@
-import React, { useMemo } from 'react'
+import useComposedClassName from '@rapid-platform/use-composed-class-name'
 
 import CustomSelect from '../components/CustomSelect'
 import { UNITS } from '../constants'
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { MonthsProps } from '../types'
-import { classNames } from '../utils'
 
 export default function Months(props: MonthsProps) {
   const {
@@ -16,21 +15,20 @@ export default function Months(props: MonthsProps) {
     disabled,
     readOnly,
     period,
-    periodicityOnDoubleClick,
     mode,
-    allowClear,
-    filterOption,
   } = props
   const optionsList = locale.months || DEFAULT_LOCALE_EN.months
 
-  const internalClassName = useMemo(
-    () =>
-      classNames({
-        'react-js-cron-field': true,
-        'react-js-cron-months': true,
-        [`${className}-field`]: !!className,
-        [`${className}-months`]: !!className,
-      }),
+  const internalClassName = useComposedClassName(
+    function* () {
+      yield 'react-js-cron-field'
+      yield 'react-js-cron-months'
+
+      if (className) {
+        yield `${className}-field`
+        yield `${className}-months`
+      }
+    },
     [className]
   )
 
@@ -47,8 +45,6 @@ export default function Months(props: MonthsProps) {
         value={value}
         unit={{
           ...UNITS[3],
-          // Allow translation of alternative labels when using "humanizeLabels"
-          // Issue #3
           alt: locale.altMonths || DEFAULT_LOCALE_EN.altMonths,
         }}
         setValue={setValue}
@@ -58,10 +54,7 @@ export default function Months(props: MonthsProps) {
         disabled={disabled}
         readOnly={readOnly}
         period={period}
-        periodicityOnDoubleClick={periodicityOnDoubleClick}
         mode={mode}
-        allowClear={allowClear}
-        filterOption={filterOption}
       />
     </div>
   )
