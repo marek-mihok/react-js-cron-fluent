@@ -1,7 +1,7 @@
 {
   "name": "@rapid/react-js-cron-fluentui",
   "version": "1.0.0",
-  "description": "A React cron editor with antd inspired by jqCron",
+  "description": "A React cron editor with fluentui inspired by jqCron",
   "author": "Matt Mulheran <matt.mulheran@rapidplatform.com> (https://github.com/matt-mulheran)",
   "license": "MIT",
   "keywords": [
@@ -39,14 +39,6 @@
   "scripts": {
     "build": "tsc",
     "prepublish": "yarn build"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "resolutions": {
-    "enhanced-resolve": "5.10.0"
   },
   "peerDependencies": {
     "@fluentui/react": "^8.111.2",
