@@ -1,4 +1,4 @@
-import { DefaultButton } from '@fluentui/react'
+import { DefaultButton, PrimaryButton } from '@fluentui/react'
 import useComposedClassName from '@rapid-platform/use-composed-class-name'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
@@ -12,6 +12,7 @@ import WeekDays from './fields/WeekDays'
 import { DEFAULT_LOCALE_EN } from './locale'
 import { CronProps, PeriodType } from './types'
 import { setError, usePrevious } from './utils'
+import React from 'react'
 
 export default function Cron(props: CronProps) {
   const {
@@ -280,7 +281,7 @@ export default function Cron(props: CronProps) {
     () => {
       if (clearButton && !readOnly) {
         return (
-          <DefaultButton
+          <PrimaryButton
             className={clearButtonClassName}
             type='primary'
             disabled={disabled}
@@ -288,7 +289,7 @@ export default function Cron(props: CronProps) {
             onClick={handleClear}
           >
             {locale.clearButtonText || DEFAULT_LOCALE_EN.clearButtonText}
-          </DefaultButton>
+          </PrimaryButton>
         )
       }
 

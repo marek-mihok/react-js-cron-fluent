@@ -3,6 +3,7 @@ import useComposedClassName from '@rapid-platform/use-composed-class-name'
 import { useCallback, useMemo } from 'react'
 import { formatValue } from '../converter'
 import { CustomSelectProps } from '../types'
+import React from 'react'
 
 export default function CustomSelect(props: CustomSelectProps) {
   const {

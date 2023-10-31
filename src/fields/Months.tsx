@@ -4,6 +4,7 @@ import CustomSelect from '../components/CustomSelect'
 import { UNITS } from '../constants'
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { MonthsProps } from '../types'
+import React from 'react'
 
 export default function Months(props: MonthsProps) {
   const {

@@ -1,5 +1,5 @@
 import useComposedClassName from '@rapid-platform/use-composed-class-name'
-
+import React from 'react'
 import CustomSelect from '../components/CustomSelect'
 import { UNITS } from '../constants'
 import { DEFAULT_LOCALE_EN } from '../locale'

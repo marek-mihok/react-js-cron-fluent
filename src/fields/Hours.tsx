@@ -4,6 +4,7 @@ import CustomSelect from '../components/CustomSelect'
 import { UNITS } from '../constants'
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { HoursProps } from '../types'
+import React from 'react'
 
 export default function Hours(props: HoursProps) {
   const {

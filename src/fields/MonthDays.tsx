@@ -1,5 +1,5 @@
 import useComposedClassName from '@rapid-platform/use-composed-class-name'
-import { useMemo } from 'react'
+import React, { useMemo } from 'react'
 
 import CustomSelect from '../components/CustomSelect'
 import { UNITS } from '../constants'
