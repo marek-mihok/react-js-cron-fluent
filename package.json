@@ -32,7 +32,6 @@
   "types": "lib/index.d.ts",
   "files": [
     "lib/",
-    "src/utils.ts",
     "package.json",
     "README.md",
     "LICENSE.md"
