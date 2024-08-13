@@ -39,20 +39,17 @@ Be sure that you have these dependencies on your project:
 ```bash
 # NPM
 npm install react-js-cron
-
-# Yarn
-yarn add react-js-cron
 ```
 
 ## Usage
 
 ```jsx
-import { Cron } from '@rapid-platform/react-js-cron-fluent'
+import { Cron } from "@rapid-platform/react-js-cron-fluent";
 
 export function App() {
-  const [value, setValue] = useState('30 5 * * 1,6')
+  const [value, setValue] = useState("30 5 * * 1,6");
 
-  return <Cron value={value} setValue={setValue} />
+  return <Cron value={value} setValue={setValue} />;
 }
 ```
 
@@ -61,19 +58,19 @@ export function App() {
 If you want to use the converter used internally you can import it in your project:
 
 ```jsx
-import { converter } from '@rapid-platform/react-js-cron-fluent'
+import { converter } from "@rapid-platform/react-js-cron-fluent";
 
 const cronString = converter.getCronStringFromValues(
-  'day', // period: 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'reboot'
+  "day", // period: 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'reboot'
   [], // months: number[] | undefined
-  [],  // monthDays: number[] | undefined
+  [], // monthDays: number[] | undefined
   [], // weekDays: number[] | undefined
   [2], // hours: number[] | undefined
   [1], // minutes: number[] | undefined
   false // humanizeValue?: boolean
-)
+);
 
-console.log('cron string:', converted)
+console.log("cron string:", converted);
 ```
 
 ```

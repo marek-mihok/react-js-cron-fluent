@@ -7,10 +7,6 @@
 ## logs
 *.log*
 
-## yarn
-.yarn/cache/
-.yarn/install-state.gz
-
 ## npm
 package-lock.json
 
@@ -22,7 +18,7 @@ package-lock.json
 ## folders
 !/.github/
 !/.storybook/
-!/.yarn/
+!/.npm/
 !/src/
 
 ## dot-files
@@ -30,4 +26,3 @@ package-lock.json
 !/.eslintrc
 !/.npmignore
 !/.prettierrc.js
-!/.yarnrc.yml
