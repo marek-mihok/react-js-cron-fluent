@@ -1,6 +1,6 @@
 {
   "name": "@rapid/react-js-cron-fluentui",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "description": "A React cron editor with fluentui inspired by jqCron",
   "author": "Marek Mihok <marek.mihok@h2o.ai> (https://github.com/marek-mihok)",
   "license": "MIT",
